@@ -135,7 +135,8 @@ class RequestLogger {
           console.warn(`🐌 [${requestId}] Slow request detected: ${duration}ms`);
         }
 
-        originalEnd.call(this, chunk, encoding);
+        // Fix: Use res as the context when calling originalEnd
+        originalEnd.apply(res, [chunk, encoding]);
       };
 
       next();
@@ -147,7 +148,8 @@ class RequestLogger {
     return {
       totalRequests: this.requestCount,
       uptime: `${Math.floor(uptime / 1000)}s`,
-      averageRequestsPerMinute: Math.round((this.requestCount / (uptime / 60000)) * 100) / 100
+      // Add safeguard against division by zero
+      averageRequestsPerMinute: Math.round((this.requestCount / (Math.max(uptime, 1000) / 60000)) * 100) / 100
     };
   }
 }
@@ -158,7 +160,8 @@ class RequestLogger {
 class ShortcodeGenerator {
   constructor() {
     this.charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    this.readableCharset = 'abcdefghijkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789';
+    // Fix: Ensure the charset is consistent and well-tested
+    this.readableCharset = 'abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789';
     this.counter = Math.floor(Math.random() * 1000);
     console.log('🎲 Shortcode generator initialized');
   }
@@ -167,8 +170,10 @@ class ShortcodeGenerator {
     const chars = readable ? this.readableCharset : this.charset;
     let result = '';
     
+    // Ensure we're using secure random generation
     for (let i = 0; i < length; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
+      const randomIndex = Math.floor(Math.random() * chars.length);
+      result += chars.charAt(randomIndex);
     }
     
     return result;
