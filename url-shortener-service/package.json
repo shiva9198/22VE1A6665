@@ -1,0 +1,53 @@
+{
+  "name": "quicklink-api",
+  "version": "2.1.3",
+  "description": "A fast and reliable URL shortening service with analytics tracking",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js --watch src",
+    "test": "jest --coverage",
+    "lint": "eslint src/",
+    "format": "prettier --write src/"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "joi": "^17.9.2",
+    "helmet": "^7.0.0",
+    "compression": "^1.7.4"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "nodemon": "^3.0.1",
+    "eslint": "^8.44.0",
+    "prettier": "^2.8.8",
+    "supertest": "^6.3.3"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "keywords": [
+    "url-shortener",
+    "link-management",
+    "analytics",
+    "microservice",
+    "api",
+    "express",
+    "nodejs"
+  ],
+  "author": {
+    "name": "Shiva Kumar",
+    "email": "shiva.dev@example.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shiva9198/quicklink-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shiva9198/quicklink-api/issues"
+  },
+  "homepage": "https://github.com/shiva9198/quicklink-api#readme"
+}
